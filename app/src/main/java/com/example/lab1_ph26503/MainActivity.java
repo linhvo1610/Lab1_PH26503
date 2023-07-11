@@ -1,6 +1,7 @@
 package com.example.lab1_ph26503;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ToDoDAO toDoDAO;
     TodoAdapter todoAdapter;
     ListView lv_todo;
+    RecyclerView todo_rcv;
     ArrayList<ToDoDTO> arrayList;
     ToDoDTO currentObj = null;
     @Override
@@ -36,20 +38,22 @@ public class MainActivity extends AppCompatActivity {
         toDoDAO.open();
 
         arrayList = toDoDAO.GetAll();
-        todoAdapter = new TodoAdapter(arrayList);
-        lv_todo = findViewById(R.id.lv_todo);
-        lv_todo.setAdapter(todoAdapter);
-        lv_todo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                currentObj = arrayList.get(i);
-                input_title.setText(currentObj.getTitle());
-                input_content.setText(currentObj.getContent());
-                input_date.setText(currentObj.getDate());
-                input_type.setText(currentObj.getType());
-                return false;
-            }
-        });
+        todoAdapter = new TodoAdapter(arrayList,toDoDAO);
+//        lv_todo = findViewById(R.id.lv_todo);
+        todo_rcv = findViewById(R.id.rcl_todo);
+        todo_rcv.setAdapter(todoAdapter);
+//        lv_todo.setAdapter(todoAdapter);
+//        lv_todo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                currentObj = arrayList.get(i);
+//                input_title.setText(currentObj.getTitle());
+//                input_content.setText(currentObj.getContent());
+//                input_date.setText(currentObj.getDate());
+//                input_type.setText(currentObj.getType());
+//                return false;
+//            }
+//        });
     }
 
     public void AddTodo(View view){
